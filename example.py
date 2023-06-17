@@ -2,10 +2,10 @@ import pandas as pd
 from darts import TimeSeries
 
 # Read a pandas DataFrame
-df = pd.read_csv("datasets/ETTh1.csv", delimiter=",")
+df = pd.read_csv("datasets/BTCUSDT.csv", delimiter=",")
 
 # Create a TimeSeries, specifying the time and value columns
-series = TimeSeries.from_dataframe(df, "date", "OT")
+series = TimeSeries.from_dataframe(df, "OPEN_TIME", "VOLUME" ,fill_missing_dates=True, freq=None)
 
 # Set aside the last 36 months as a validation series
 train, val = series[:-1000], series[-1000:]
@@ -13,7 +13,7 @@ train, val = series[:-1000], series[-1000:]
 from darts.models import NLinearModel
 
 # Tạo mô hình TFT
-model = NLinearModel(input_chunk_length=100, output_chunk_length=50)
+model = NLinearModel(input_chunk_length=100, output_chunk_length=50, n_epochs = 20)
 
 
 # Huấn luyện mô hình
